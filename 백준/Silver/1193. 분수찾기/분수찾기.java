@@ -1,29 +1,35 @@
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
 
 public class Main {
 
-	public static void main(String[] args){
-		Scanner scan = new Scanner(System.in);
-		int num = scan.nextInt();
-		int a=1,b=1, N=0;
-		int count=0;
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		int num = Integer.parseInt(st.nextToken()); //구하고자 하는 수
 		
-		if(num==1) {
-			System.out.println("1/1");
-		}else {
-			while(count<num) {
-				N++;
-				count=N*(N+1)/2;
-			}
-			int i = num-(N-1)*N/2;
-			if(N%2==0) { //짝수 행일시
-				a = i;
-				b = N-i+1;
+		int a=0; //분자
+		int b=0; //분모
+		int Max=1; //분자 또는 분모의 최대치
+		int count=1; //count를++시켜서 num이랑 같으면 수행 종료
+		int sum=0; //sum의 숫자를 증가시키거나 감소시켜서 반복시킴
+		
+		while(count<=num) {
+			if(Max%2==1) {
+				a=Max-sum;
+				b=1+sum;
 			}else {
-				a = N-i+1;
-				b = i;
+				a=1+sum;
+				b=Max-sum;
 			}
-			System.out.println(a+"/"+b);
+			if(Max==(1+sum)) {
+				Max++;
+				sum=0; 
+			}else sum++;
+			count++;
 		}
+		System.out.println(a+"/"+b);
 	}
 }
